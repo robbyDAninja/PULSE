@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.openclaw.pulse-sync</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/robbyhiggins/Documents/Bridge.ninja/openclaw-ecosystem-pulse/scripts/sync-and-notify.sh</string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Weekday</key>
+        <integer>1</integer>
+        <key>Hour</key>
+        <integer>10</integer>
+        <key>Minute</key>
+        <integer>15</integer>
+    </dict>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/robbyhiggins/Documents/Bridge.ninja/openclaw-ecosystem-pulse</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/robbyhiggins/Documents/Bridge.ninja/openclaw-ecosystem-pulse/scripts/logs/launchd_pulse_sync.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/robbyhiggins/Documents/Bridge.ninja/openclaw-ecosystem-pulse/scripts/logs/launchd_pulse_sync_error.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>HOME</key>
+        <string>/Users/robbyhiggins</string>
+        <key>GOOGLE_WORKSPACE_CLI_CONFIG_DIR</key>
+        <string>/Users/robbyhiggins/Documents/Bridge.ninja/.gws</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>
