@@ -18,7 +18,7 @@
         <key>Hour</key>
         <integer>10</integer>
         <key>Minute</key>
-        <integer>15</integer>
+        <integer>30</integer>
     </dict>
 
     <key>WorkingDirectory</key>
@@ -33,11 +33,9 @@
     <key>EnvironmentVariables</key>
     <dict>
         <key>PATH</key>
-        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <string>/usr/local/bin:/usr/bin:/bin</string>
         <key>HOME</key>
         <string>/Users/robbyhiggins</string>
-        <key>GOOGLE_WORKSPACE_CLI_CONFIG_DIR</key>
-        <string>/Users/robbyhiggins/Documents/Bridge.ninja/.gws</string>
     </dict>
 
     <key>RunAtLoad</key>
