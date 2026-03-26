@@ -1,0 +1,56 @@
+name: Collect Intelligence Signals
+
+on:
+  schedule:
+    # Tuesday + Friday at 06:00 UTC (~1-2am ET)
+    - cron: '0 6 * * 2'
+    - cron: '0 6 * * 5'
+  workflow_dispatch:
+    inputs:
+      lookback_hours:
+        description: 'Hours to look back for signals (default: 84 = 3.5 days)'
+        required: false
+        default: '84'
+
+permissions:
+  contents: read
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Collect signals
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          LOOKBACK_HOURS: ${{ github.event.inputs.lookback_hours || '84' }}
+        run: python collect_signals.py --lookback-hours "$LOOKBACK_HOURS"
+
+      - name: Alert Slack on failure
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -n "${SLACK_BOT_TOKEN}" ]; then
+            curl -s -X POST "https://slack.com/api/chat.postMessage" \
+              -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"channel\": \"C0A6NNXEEJG\",
+                \"text\": \":warning: Intelligence signal collection failed. Check: ${RUN_URL}\"
+              }"
+          fi

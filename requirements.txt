@@ -2,3 +2,7 @@ feedparser==6.0.11
 anthropic==0.42.0
 pyyaml==6.0.2
 requests==2.32.3
+
+# Discovery Layer
+supabase==2.13.0
+httpx==0.28.1

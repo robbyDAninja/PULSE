@@ -23,7 +23,7 @@ feeds:
     url: "https://news.google.com/rss/search?q=%22openclaw%22+OR+%22open+claw%22+AI+agent&hl=en-US&gl=US&ceid=US:en"
 
   - name: "Google News — Spinoffs"
-    url: "https://news.google.com/rss/search?q=%22ironclaw%22+OR+%22zeroclaw%22+OR+%22nanoclaw%22+OR+%22picoclaw%22+AI+agent&hl=en-US&gl=US&ceid=US:en"
+    url: "https://news.google.com/rss/search?q=%22ironclaw%22+OR+%22zeroclaw%22+OR+%22nanoclaw%22+OR+%22picoclaw%22+OR+%22nemoclaw%22+AI+agent&hl=en-US&gl=US&ceid=US:en"
 
   - name: "The Hacker News (Security)"
     url: "https://feeds.feedburner.com/TheHackersNews"
@@ -33,6 +33,12 @@ feeds:
 
   - name: "Hacker News — AI Agent Frameworks"
     url: "https://hnrss.org/newest?q=personal+AI+assistant+OR+AI+agent+framework&points=30"
+
+  - name: "NemoClaw GitHub Releases"
+    url: "https://github.com/NVIDIA/NemoClaw/releases.atom"
+
+  - name: "Hacker News — NemoClaw"
+    url: "https://hnrss.org/newest?q=nemoclaw&points=10"
 
   - name: "IronClaw Watch"
     url: "https://news.google.com/rss/search?q=%22ironclaw%22+AI+agent+OR+%22iron+claw%22+rust+agent&hl=en-US&gl=US&ceid=US:en"
@@ -44,3 +50,71 @@ settings:
   model: "claude-haiku-4-5-20251001"
   max_tokens: 2000
   report_dir: "reports"
+
+# ============================================================
+# DISCOVERY LAYER — Signal collection configuration
+# ============================================================
+
+collection:
+  # How far back to look on each collection run (hours).
+  # Tue/Fri schedule = ~84 hours between runs. Use 96 for overlap buffer.
+  lookback_hours: 96
+
+  # Supabase connection (values come from environment variables, not config)
+  # SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in env
+
+sources:
+  github:
+    enabled: true
+    max_results_per_keyword: 10
+    min_stars: 5
+    user_agent: "bridge-ninja-pulse/1.0"
+
+  hackernews:
+    enabled: true
+    base_url: "https://hn.algolia.com/api/v1"
+    max_results_per_keyword: 50
+    min_points: 3
+    count_comment_mentions: true
+
+  youtube:
+    enabled: false  # Phase 2 — enable when YOUTUBE_API_KEY is added
+    max_results_per_keyword: 10
+    category_ids: []
+
+  rss:
+    enabled: true
+    feeds:
+      - name: "Google Alerts — AI Agents"
+        url: "https://www.google.com/alerts/feeds/AI+agent+framework"
+      - name: "Google Alerts — AI Business"
+        url: "https://www.google.com/alerts/feeds/AI+business+automation"
+      - name: "Google Alerts — AI Enterprise"
+        url: "https://www.google.com/alerts/feeds/enterprise+AI+adoption"
+      - name: "Google News — AI"
+        url: "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-US&gl=US&ceid=US:en"
+      - name: "Google News — Robotics AI"
+        url: "https://news.google.com/rss/search?q=humanoid+robot+OR+%22physical+AI%22&hl=en-US&gl=US&ceid=US:en"
+    user_agent: "bridge-ninja-pulse/1.0"
+
+# --- Scoring weights (v1 — calibrate after 8 weeks of data) ---
+scoring:
+  weights:
+    github_star_velocity: 0.20
+    cross_source_count: 0.25
+    hn_activity: 0.15
+    youtube_activity: 0.15
+    news_coverage: 0.15
+    ecosystem_growth: 0.10
+
+  stages:
+    emergence:
+      max_composite_score: 25
+      description: "Exists, some people noticed"
+    traction:
+      min_composite_score: 26
+      max_composite_score: 65
+      description: "Gaining real momentum"
+    inflection:
+      min_composite_score: 66
+      description: "Reshaping the landscape"
