@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Generate report
+      - name: Generate Deep Pulse report
         run: python generate_pulse.py
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -42,28 +42,54 @@ jobs:
             echo "new_report=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Send email notification
-        if: steps.commit.outputs.new_report == 'true'
+      - name: Generate Discovery Layer
+        id: discovery
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          python generate_discovery.py --output discovery_payload.json
+          if [ -f discovery_payload.json ]; then
+            echo "has_discovery=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_discovery=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send combined email
+        if: steps.commit.outputs.new_report == 'true' || steps.discovery.outputs.has_discovery == 'true'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           PULSE_WEBHOOK_SECRET: ${{ secrets.PULSE_WEBHOOK_SECRET }}
         run: |
-          REPORT_FILE=$(ls -t reports/*.md | head -1)
-          REPORT_DATE=$(basename "$REPORT_FILE" | grep -oE '^[0-9]{4}-[0-9]{2}-[0-9]{2}')
-          REPORT_CONTENT=$(cat "$REPORT_FILE")
+          REPORT_DATE=$(date +%Y-%m-%d)
+
+          # Build report markdown (if new report exists)
+          REPORT_MD="null"
+          if [ "${{ steps.commit.outputs.new_report }}" = "true" ]; then
+            REPORT_FILE=$(ls -t reports/*.md | head -1)
+            REPORT_DATE=$(basename "$REPORT_FILE" | grep -oE '^[0-9]{4}-[0-9]{2}-[0-9]{2}')
+            REPORT_MD=$(cat "$REPORT_FILE" | jq -Rs .)
+          fi
+
+          # Build discovery layer (if payload exists)
+          DISCOVERY="null"
+          if [ -f discovery_payload.json ]; then
+            DISCOVERY=$(cat discovery_payload.json)
+          fi
+
+          # Combine into single request
+          PAYLOAD=$(jq -n \
+            --argjson report_markdown "$REPORT_MD" \
+            --arg report_date "$REPORT_DATE" \
+            --arg subject "Bridge Ninja Intelligence — $REPORT_DATE" \
+            --arg webhook_secret "${PULSE_WEBHOOK_SECRET}" \
+            --argjson discovery_layer "$DISCOVERY" \
+            '{report_markdown: $report_markdown, report_date: $report_date, subject: $subject, webhook_secret: $webhook_secret, discovery_layer: $discovery_layer}')
 
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
             "${SUPABASE_URL}/functions/v1/send-pulse-email" \
             -H "Content-Type: application/json" \
-            -d @- <<EOF
-          {
-            "report_markdown": $(echo "$REPORT_CONTENT" | jq -Rs .),
-            "report_date": "$REPORT_DATE",
-            "subject": "OpenClaw Ecosystem Pulse — $REPORT_DATE",
-            "webhook_secret": "${PULSE_WEBHOOK_SECRET}"
-          }
-          EOF
-          )
+            -d "$PAYLOAD")
 
           HTTP_CODE=$(echo "$RESPONSE" | tail -1)
           BODY=$(echo "$RESPONSE" | sed '$d')
@@ -75,15 +101,17 @@ jobs:
           echo "Email sent successfully: $BODY"
 
       - name: Alert Slack on notification failure
-        if: failure() && steps.commit.outputs.new_report == 'true'
+        if: failure()
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          curl -s -X POST "https://slack.com/api/chat.postMessage" \
-            -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
-            -H "Content-Type: application/json" \
-            -d "{
-              \"channel\": \"C0A6NNXEEJG\",
-              \"text\": \":warning: OpenClaw Pulse email notification failed. Check GitHub Actions run: ${RUN_URL}\"
-            }"
+          if [ -n "${SLACK_BOT_TOKEN}" ]; then
+            curl -s -X POST "https://slack.com/api/chat.postMessage" \
+              -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"channel\": \"C0A6NNXEEJG\",
+                \"text\": \":warning: Intelligence email failed. Check: ${RUN_URL}\"
+              }"
+          fi
