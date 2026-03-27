@@ -167,8 +167,6 @@ def aggregate_signals(signals: list[Signal]) -> dict:
         "hn_max_points": hn_max_points,
         "youtube_video_count": youtube_video_count,
         "news_mention_count": news_mention_count,
-        "rss_mention_count": news_mention_count,
-        "source_count": source_categories_seen,
         "source_categories_seen": source_categories_seen,
     }
 
@@ -219,9 +217,8 @@ def build_snapshot(
         "hn_mentions": signals_summary.get("hn_mentions", 0),
         "hn_max_points": signals_summary.get("hn_max_points", 0),
         "youtube_video_count": signals_summary.get("youtube_video_count", 0),
-        "rss_mention_count": signals_summary.get("rss_mention_count", 0),
         "news_mention_count": signals_summary.get("news_mention_count", 0),
-        "source_count": signals_summary.get("source_count", 0),
+        "source_categories_seen": signals_summary.get("source_categories_seen", 0),
         "composite_score": score_result["composite_score"],
         "score_delta": score_result["score_delta"],
         "stage": score_result["stage"],
