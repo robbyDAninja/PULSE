@@ -24,10 +24,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger("signal_brief")
 
-# Only show topics that had notable signals
-MIN_POINTS_TO_SHOW = 10  # HN/GitHub threshold
+# Display settings
+MIN_POINTS_TO_SHOW = 0  # Show all signals, don't filter by points
 MAX_STORIES_PER_TOPIC = 3
-MAX_TOPICS = 10
+MAX_TOPICS = 15  # Show all tracked topics
 
 
 def get_recent_signals(client, hours: int = 84) -> list[dict]:
@@ -38,8 +38,8 @@ def get_recent_signals(client, hours: int = 84) -> list[dict]:
         .table("signals")
         .select("*, topics!inner(name, slug, category)")
         .gte("discovered_at", since)
-        .order("points_or_stars", desc=True)
-        .limit(500)
+        .order("points_or_stars", desc=True, nulls_last=True)
+        .limit(3000)
         .execute()
         .data
     )
