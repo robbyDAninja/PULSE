@@ -38,7 +38,7 @@ def get_recent_signals(client, hours: int = 84) -> list[dict]:
         .table("signals")
         .select("*, topics!inner(name, slug, category)")
         .gte("discovered_at", since)
-        .order("points_or_stars", desc=True, nulls_last=True)
+        .order("points_or_stars", desc=True)
         .limit(3000)
         .execute()
         .data
