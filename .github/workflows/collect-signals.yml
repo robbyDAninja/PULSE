@@ -39,6 +39,13 @@ jobs:
           LOOKBACK_HOURS: ${{ github.event.inputs.lookback_hours || '84' }}
         run: python collect_signals.py --lookback-hours "$LOOKBACK_HOURS"
 
+      - name: Send signal brief email
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          PULSE_WEBHOOK_SECRET: ${{ secrets.PULSE_WEBHOOK_SECRET }}
+        run: python generate_signal_brief.py
+
       - name: Alert Slack on failure
         if: failure()
         env:
