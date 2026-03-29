@@ -97,6 +97,20 @@ sources:
         url: "https://news.google.com/rss/search?q=humanoid+robot+OR+%22physical+AI%22&hl=en-US&gl=US&ceid=US:en"
     user_agent: "bridge-ninja-pulse/1.0"
 
+  huggingface:
+    enabled: true
+    max_results: 10
+
+  arxiv:
+    enabled: true
+    max_results: 10
+    categories: "cs.AI+OR+cs.CL+OR+cs.LG+OR+cs.MA"
+
+  pypi:
+    enabled: true
+    search_enabled: true
+    packages: []  # Additional packages to always track (beyond keyword search)
+
 # --- Scoring weights (v1 — calibrate after 8 weeks of data) ---
 scoring:
   weights:

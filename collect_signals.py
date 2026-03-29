@@ -29,7 +29,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 import db  # noqa: E402
 import scoring  # noqa: E402
-from sources import github, hackernews, rss_feeds  # noqa: E402
+from sources import github, hackernews, rss_feeds, huggingface, arxiv, pypi  # noqa: E402
 from sources.base import Signal  # noqa: E402
 
 # ── Logging setup ────────────────────────────────────────────────────
@@ -51,6 +51,9 @@ SOURCE_MODULES = [
     ("github", github),
     ("hackernews", hackernews),
     ("rss", rss_feeds),
+    ("huggingface", huggingface),
+    ("arxiv", arxiv),
+    ("pypi", pypi),
 ]
 
 
