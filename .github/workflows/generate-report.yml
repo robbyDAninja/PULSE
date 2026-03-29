@@ -55,6 +55,13 @@ jobs:
             echo "has_discovery=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Generate Pattern Analysis
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python generate_patterns.py --output patterns.md
+
       - name: Send combined email
         if: steps.commit.outputs.new_report == 'true' || steps.discovery.outputs.has_discovery == 'true'
         env:
@@ -63,23 +70,39 @@ jobs:
         run: |
           REPORT_DATE=$(date +%Y-%m-%d)
 
-          # Build report markdown (if new report exists)
-          REPORT_MD="null"
+          # Build report markdown: patterns + deep pulse combined
+          REPORT_MD=""
+          if [ -f patterns.md ] && [ -s patterns.md ]; then
+            PATTERNS=$(cat patterns.md)
+            REPORT_MD="$PATTERNS"
+          fi
+
           if [ "${{ steps.commit.outputs.new_report }}" = "true" ]; then
             REPORT_FILE=$(ls -t reports/*.md | head -1)
             REPORT_DATE=$(basename "$REPORT_FILE" | grep -oE '^[0-9]{4}-[0-9]{2}-[0-9]{2}')
-            REPORT_MD=$(cat "$REPORT_FILE" | jq -Rs .)
+            PULSE=$(cat "$REPORT_FILE")
+            if [ -n "$REPORT_MD" ]; then
+              REPORT_MD="$REPORT_MD
+
+---
+
+$PULSE"
+            else
+              REPORT_MD="$PULSE"
+            fi
           fi
 
-          # Build discovery layer (if payload exists)
+          # Build discovery layer
           DISCOVERY="null"
           if [ -f discovery_payload.json ]; then
             DISCOVERY=$(cat discovery_payload.json)
           fi
 
-          # Combine into single request
+          # Encode and send
+          REPORT_MD_JSON=$(echo "$REPORT_MD" | jq -Rs .)
+
           PAYLOAD=$(jq -n \
-            --argjson report_markdown "$REPORT_MD" \
+            --argjson report_markdown "$REPORT_MD_JSON" \
             --arg report_date "$REPORT_DATE" \
             --arg subject "Bridge Ninja Intelligence — $REPORT_DATE" \
             --arg webhook_secret "${PULSE_WEBHOOK_SECRET}" \
