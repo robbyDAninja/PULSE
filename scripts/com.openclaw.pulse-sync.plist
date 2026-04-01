@@ -8,7 +8,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/robbyhiggins/Documents/Bridge.ninja/openclaw-ecosystem-pulse/scripts/sync-and-notify.sh</string>
+        <string>/Users/robbyhiggins/Documents/Bridge.ninja/PULSE/scripts/sync-and-notify.sh</string>
     </array>
 
     <key>StartCalendarInterval</key>
@@ -22,13 +22,13 @@
     </dict>
 
     <key>WorkingDirectory</key>
-    <string>/Users/robbyhiggins/Documents/Bridge.ninja/openclaw-ecosystem-pulse</string>
+    <string>/Users/robbyhiggins/Documents/Bridge.ninja/PULSE</string>
 
     <key>StandardOutPath</key>
-    <string>/Users/robbyhiggins/Documents/Bridge.ninja/openclaw-ecosystem-pulse/scripts/logs/launchd_pulse_sync.log</string>
+    <string>/Users/robbyhiggins/Documents/Bridge.ninja/PULSE/scripts/logs/launchd_pulse_sync.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/robbyhiggins/Documents/Bridge.ninja/openclaw-ecosystem-pulse/scripts/logs/launchd_pulse_sync_error.log</string>
+    <string>/Users/robbyhiggins/Documents/Bridge.ninja/PULSE/scripts/logs/launchd_pulse_sync_error.log</string>
 
     <key>EnvironmentVariables</key>
     <dict>
