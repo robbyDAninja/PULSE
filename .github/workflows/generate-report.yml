@@ -1,8 +1,9 @@
 name: Generate OpenClaw Ecosystem Pulse
 
+# Retired 2026-06-11: the Monday strategy email had no consumer after the Dojo
+# pivot, and the stage/score layer beneath it measured collection-window
+# artifacts, not real movement. Manual dispatch kept for archaeology.
 on:
-  schedule:
-    - cron: '0 14 * * 1'
   workflow_dispatch:
 
 permissions:
