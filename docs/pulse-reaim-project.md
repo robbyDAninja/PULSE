@@ -1,5 +1,5 @@
 ---
-version: 0.5
+version: 0.6
 last_updated: 2026-06-11
 status: active
 linear_project: https://linear.app/bridge-ninja/project/re-aim-the-pulse-cdcd0cddb070
@@ -125,6 +125,7 @@ McKinsey/Gartner "AI adoption" query. Diamandis blog dropped (stale). Agency sub
 
 | Version | Date | Type | Change |
 |---|---|---|---|
+| 0.6 | 2026-06-11 | Major | Identity re-pointed at the real offer: Claude-platform Dojo (6-week training, Claude Team account wired to existing systems) as lead; Slack AI team members demoted to advanced tier (Robby). Box POSITIONING/MANIFESTO lag this — flagged |
 | 0.5 | 2026-06-11 | Major | Email redesigned receipt → Monday POV briefing (through-line + owner quotes + lead angle teed up; /find-ideas reference dropped — skill doesn't exist yet, BRI-46/47). Hopeful-humanity philosophy promoted from seasoning to spine in synthesis prompt (Robby). Sources stay broad-SMB until proof says otherwise (Robby) |
 | 0.4 | 2026-06-11 | Major | Phase 1 SHIPPED — real `--write` run (6 angles live), CHECK-constraint migration, CI workflow + slim email. Old email untouched pending recalibration discussion |
 | 0.3 | 2026-06-04 | Major | Phase 1 BUILT + dry-run validated. ICP corrected agencies→SMBs; Moonshots-as-seasoning + SMB-only + pain-led decisions locked; source set + record shape + buckets taxonomy locked; files + remaining steps documented |

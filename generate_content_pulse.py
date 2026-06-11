@@ -196,7 +196,7 @@ OUTPUT — return ONLY a JSON object, no prose, no markdown fences:
       "bridge_ninja_twist": "OUR take — how this lands at SMB scale, tactical, human. MANDATORY.",
       "buckets": ["1-2 of: {', '.join(tax['buckets'])}"],
       "big_5_angle": "exactly one of: {', '.join(tax['big_5_angle'])}",
-      "bridge_ninja_element": "short phrase, e.g. 'team members', 'flow', 'clear the noise'",
+      "bridge_ninja_element": "short phrase, e.g. 'the Dojo', 'Claude projects on your existing systems', 'clear the noise'",
       "value_lens": ["2-3 short value tags, e.g. 'relief', 'transparency', 'human-AI collaboration'"],
       "messaging_pillar": "short positioning phrase capturing the angle's stance",
       "content_theme": "short theme label",

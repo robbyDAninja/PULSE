@@ -17,12 +17,22 @@ report:
     buried in operational noise, drowning in tools that don't talk to each
     other, and short on hours for the work that matters
 
-  # Who we are / what we hold (knowledge-base/brand: POSITIONING, MANIFESTO).
+  # Who we are / what we hold (offer updated 2026-06-11, Robby: the lead is
+  # Claude-platform enablement — the Dojo — NOT Slack AI team members. Box
+  # brand docs POSITIONING.md/MANIFESTO.md lag this; sales canon + first
+  # client delivery confirm it).
   identity: >-
-    Bridge Ninja builds the "finishing layer" on top of the platforms — AI
-    team members deployed in Slack that clear the noise so people can do work
-    that matters. Pro-work, anti-job. Workplace flourishing over raw
-    productivity. We keep the humanness of the work. We eat our own cooking.
+    Bridge Ninja gets SMB owners and their teams thriving on Claude. The core
+    offer (the Dojo) is six weeks of hands-on training that wires a Claude
+    Team account into the systems they already run — the Trello board, the
+    inbox, the meeting notes — so rules and conventions live in project
+    instructions and status updates happen in conversation instead of five
+    tools. No new platform to babysit: we train the team to keep it healthy
+    themselves. We clear the noise so people can do work that matters.
+    Pro-work, anti-job. Workplace flourishing over raw productivity. We keep
+    the humanness of the work. We eat our own cooking. (Custom AI team
+    members in Slack are our advanced tier — real, but never the lead
+    message.)
 
   # The undercurrent (Robby, 2026-06-11): the philosophy IS the differentiator.
   philosophy: >-
