@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ── Configuration ──────────────────────────────────────────────
-REPO_DIR="/Users/robbyhiggins/Documents/Bridge.ninja/PULSE"
+REPO_DIR="/Users/robbyhiggins/Documents/Bridge.ninja/code/pulse"
 LOG_DIR="$REPO_DIR/scripts/logs"
 LOG_FILE="$LOG_DIR/pulse-sync.log"
 GIT="/usr/bin/git"
