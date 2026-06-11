@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rewind № 02 — AI + Human Flourishing · Bridge Ninja Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0b1016;
+    --ink-2: #101824;
+    --paper: #e8ecef;
+    --paper-dim: #9aa7b1;
+    --paper-faint: #5c6b77;
+    --signal: #2fd4ad;          /* Bridge Ninja teal, tuned for dark */
+    --signal-deep: #16a085;
+    --ember: #f2b34c;           /* the grounded-hope warm note */
+    --hairline: rgba(232, 236, 239, 0.10);
+    --hairline-2: rgba(232, 236, 239, 0.05);
+    --card: rgba(232, 236, 239, 0.025);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 19px;
+    line-height: 1.62;
+    font-weight: 350;
+    overflow-x: hidden;
+  }
+
+  /* ---- atmosphere: graph-paper grid + glow + grain ---- */
+  .atmosphere {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  }
+  .atmosphere::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--hairline-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hairline-2) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 80%);
+  }
+  .atmosphere::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 38% at 72% -6%, rgba(47, 212, 173, 0.13), transparent 62%),
+      radial-gradient(ellipse 48% 30% at 12% 4%, rgba(242, 179, 76, 0.05), transparent 60%);
+  }
+  .grain {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.05'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .page { position: relative; z-index: 2; max-width: 1060px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---- masthead ---- */
+  .masthead {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 0; border-bottom: 1px solid var(--hairline);
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper-dim);
+  }
+  .masthead .live { display: flex; align-items: center; gap: 9px; }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--signal);
+    box-shadow: 0 0 12px var(--signal);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--signal); }
+    50% { opacity: 0.45; box-shadow: 0 0 3px var(--signal); }
+  }
+
+  /* ---- hero ---- */
+  .hero { padding: 96px 0 72px; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--signal);
+    margin-bottom: 34px; display: flex; align-items: center; gap: 14px;
+  }
+  .eyebrow::after { content: ""; height: 1px; width: 72px; background: var(--signal); opacity: 0.45; }
+  h1 {
+    font-family: "Fraunces", serif;
+    font-size: clamp(44px, 7.4vw, 88px);
+    line-height: 1.02; font-weight: 560;
+    letter-spacing: -0.022em;
+    max-width: 17ch;
+  }
+  h1 em {
+    font-style: italic; font-weight: 420; color: var(--signal);
+  }
+  .standfirst {
+    margin-top: 36px; max-width: 58ch; font-size: 22px; line-height: 1.6;
+    color: var(--paper-dim); font-weight: 330;
+  }
+  .standfirst strong { color: var(--paper); font-weight: 480; }
+  .dateline {
+    margin-top: 30px; font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px; letter-spacing: 0.1em; color: var(--paper-faint);
+  }
+
+  /* ---- stat strip ---- */
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+    margin: 28px 0 0;
+  }
+  .stat { padding: 26px 22px 24px; border-left: 1px solid var(--hairline); }
+  .stat:first-child { border-left: none; padding-left: 0; }
+  .stat .num {
+    font-family: "Fraunces", serif; font-size: 38px; font-weight: 480;
+    letter-spacing: -0.02em; color: var(--paper);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .num span { color: var(--signal); }
+  .stat .label {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--paper-faint);
+    margin-top: 7px;
+  }
+
+  /* ---- chart ---- */
+  .chart-block { padding: 84px 0 30px; }
+  .chart-title {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--paper-dim);
+    margin-bottom: 8px;
+  }
+  .chart-sub { font-size: 16px; color: var(--paper-faint); margin-bottom: 36px; max-width: 60ch; }
+  .chart {
+    display: flex; align-items: flex-end; gap: 10px; height: 220px;
+    border-bottom: 1px solid var(--hairline); padding-bottom: 0; position: relative;
+  }
+  .bar-wrap { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; position: relative; }
+  .bar {
+    width: 100%; border-radius: 3px 3px 0 0;
+    background: linear-gradient(180deg, var(--signal) 0%, rgba(22,160,133,0.25) 100%);
+    transform-origin: bottom; transform: scaleY(0);
+    transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1), filter 0.25s ease;
+    min-height: 3px;
+  }
+  .chart.in .bar { transform: scaleY(1); }
+  .bar-wrap:hover .bar { filter: brightness(1.35); }
+  .bar-wrap .tip {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--signal);
+    opacity: 0; transition: opacity 0.2s; white-space: nowrap; pointer-events: none;
+  }
+  .bar-wrap:hover .tip { opacity: 1; }
+  .chart-axis {
+    display: flex; gap: 10px; margin-top: 12px;
+    font-family: "IBM Plex Mono", monospace; font-size: 10px;
+    letter-spacing: 0.06em; color: var(--paper-faint);
+  }
+  .chart-axis span { flex: 1; text-align: center; }
+  .chart-note {
+    margin-top: 22px; font-size: 14.5px; color: var(--paper-faint); font-style: italic; max-width: 70ch;
+  }
+  .chart-note b { color: var(--paper-dim); font-weight: 500; }
+
+  /* ---- chapters / timeline ---- */
+  .chapters { position: relative; padding: 70px 0 10px; }
+  .spine {
+    position: absolute; left: 7px; top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(180deg, transparent, var(--hairline) 6%, var(--hairline) 94%, transparent);
+  }
+  .chapter { position: relative; padding: 0 0 96px 72px; }
+  .chapter-node {
+    position: absolute; left: 0; top: 14px;
+    width: 15px; height: 15px; border-radius: 50%;
+    background: var(--ink); border: 2px solid var(--signal);
+    box-shadow: 0 0 0 5px var(--ink), 0 0 16px rgba(47, 212, 173, 0.45);
+  }
+  .chapter-month {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--signal);
+    margin-bottom: 14px;
+  }
+  .chapter-month .range { color: var(--paper-faint); font-weight: 400; margin-left: 12px; letter-spacing: 0.1em; }
+  .chapter h2 {
+    font-family: "Fraunces", serif; font-size: clamp(30px, 4vw, 44px);
+    font-weight: 530; line-height: 1.12; letter-spacing: -0.018em;
+    max-width: 22ch; margin-bottom: 22px;
+  }
+  .chapter h2 em { font-style: italic; font-weight: 400; }
+  .chapter .body { max-width: 64ch; color: var(--paper-dim); }
+  .chapter .body strong { color: var(--paper); font-weight: 480; }
+  .chapter-num {
+    position: absolute; right: -10px; top: -26px; z-index: -1;
+    font-family: "Fraunces", serif; font-style: italic; font-weight: 300;
+    font-size: clamp(120px, 18vw, 230px); line-height: 1;
+    color: transparent; -webkit-text-stroke: 1px rgba(232,236,239,0.06);
+    user-select: none;
+  }
+
+  /* ---- receipts ---- */
+  .receipts {
+    margin-top: 34px; display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px;
+  }
+  .receipt {
+    border: 1px solid var(--hairline); border-radius: 6px; padding: 16px 18px 14px;
+    background: var(--card); position: relative;
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  }
+  .receipt:hover {
+    transform: translateY(-3px); border-color: rgba(47, 212, 173, 0.4);
+    background: rgba(47, 212, 173, 0.04);
+  }
+  .receipt .meta {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px;
+    letter-spacing: 0.08em; color: var(--paper-faint); margin-bottom: 9px;
+  }
+  .receipt .tag {
+    padding: 2px 7px; border-radius: 3px; font-weight: 600; letter-spacing: 0.12em;
+    background: rgba(47, 212, 173, 0.1); color: var(--signal);
+  }
+  .receipt .tag.hn { background: rgba(242, 179, 76, 0.1); color: var(--ember); }
+  .receipt .tag.rss { background: rgba(154, 167, 177, 0.12); color: var(--paper-dim); }
+  .receipt .title { font-size: 16px; line-height: 1.42; color: var(--paper); font-weight: 400; }
+  .receipt .traction {
+    margin-top: 10px; font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    color: var(--paper-faint); font-variant-numeric: tabular-nums;
+  }
+  .receipt .traction b { color: var(--signal); font-weight: 600; }
+
+  /* ---- the thread ---- */
+  .thread { padding: 60px 0 110px; text-align: center; }
+  .thread .rule {
+    width: 1px; height: 64px; margin: 0 auto 44px;
+    background: linear-gradient(180deg, var(--hairline), var(--signal));
+  }
+  .thread .label {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--signal); margin-bottom: 34px;
+  }
+  .thread blockquote {
+    font-family: "Fraunces", serif; font-size: clamp(28px, 4.4vw, 47px);
+    font-weight: 420; font-style: italic; line-height: 1.28; letter-spacing: -0.01em;
+    max-width: 24ch; margin: 0 auto;
+  }
+  .thread blockquote .arc { color: var(--signal); }
+  .thread .kicker {
+    margin-top: 36px; font-size: 19px; color: var(--paper-dim); font-weight: 330;
+  }
+  .thread .kicker b { color: var(--ember); font-weight: 500; }
+
+  /* ---- coda ---- */
+  .coda {
+    border: 1px solid rgba(242, 179, 76, 0.22); border-radius: 10px;
+    background:
+      radial-gradient(ellipse 75% 120% at 50% -30%, rgba(242, 179, 76, 0.09), transparent 65%),
+      rgba(242, 179, 76, 0.015);
+    padding: 54px 58px 50px; margin-bottom: 110px;
+  }
+  .coda .label {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.26em; text-transform: uppercase; color: var(--ember); margin-bottom: 22px;
+  }
+  .coda h3 {
+    font-family: "Fraunces", serif; font-size: clamp(26px, 3.4vw, 36px);
+    font-weight: 530; line-height: 1.2; letter-spacing: -0.015em;
+    max-width: 26ch; margin-bottom: 18px;
+  }
+  .coda p { max-width: 62ch; color: var(--paper-dim); font-size: 19px; }
+  .coda p b { color: var(--paper); font-weight: 480; }
+
+  /* ---- caveats / colophon ---- */
+  .colophon {
+    border-top: 1px solid var(--hairline); padding: 40px 0 70px;
+    display: grid; grid-template-columns: 180px 1fr; gap: 34px;
+  }
+  .colophon .label {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--paper-faint);
+  }
+  .colophon p { font-size: 14.5px; line-height: 1.65; color: var(--paper-faint); max-width: 78ch; }
+  .colophon p + p { margin-top: 10px; }
+
+  /* ---- reveal on scroll ---- */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .hero .reveal:nth-child(1) { transition-delay: 0.05s; }
+  .hero .reveal:nth-child(2) { transition-delay: 0.16s; }
+  .hero .reveal:nth-child(3) { transition-delay: 0.3s; }
+  .hero .reveal:nth-child(4) { transition-delay: 0.42s; }
+  .hero .reveal:nth-child(5) { transition-delay: 0.54s; }
+
+  ::selection { background: rgba(47, 212, 173, 0.3); }
+
+  @media (max-width: 760px) {
+    body { font-size: 17px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(odd) { border-left: none; padding-left: 0; }
+    .stat:nth-child(2) { border-left: 1px solid var(--hairline); }
+    .stat:nth-child(4) { border-left: 1px solid var(--hairline); }
+    .stat { border-top: 1px solid var(--hairline); }
+    .stat:nth-child(-n+2) { border-top: none; }
+    .chapter { padding-left: 44px; }
+    .coda { padding: 38px 28px; }
+    .colophon { grid-template-columns: 1fr; gap: 14px; }
+    .chapter-num { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="atmosphere"></div>
+<div class="grain"></div>
+
+<div class="page">
+
+  <header class="masthead">
+    <span>Bridge Ninja · Intelligence</span>
+    <span class="live"><span class="dot"></span>Pulse · Rewind № 02</span>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="eyebrow reveal">Rewind № 02 — AI + Human Flourishing</div>
+    <h1 class="reveal">The apocalypse was <em>postponed</em>. The argument got better.</h1>
+    <p class="standfirst reveal">
+      This topic's keywords listen for the anxiety — <strong>basic income, job displacement,
+      labor impact</strong>. So this is a contemporaneous record of the worry conversation:
+      1,379 timestamped signals, March 20 to June 11, 2026. Quieter than the agent-security
+      story, and by June it had changed its subject.
+    </p>
+    <div class="dateline reveal">2026-03-20 → 2026-06-11 · intelligence.signals · topic: ai-human-flourishing</div>
+    <div class="stats reveal">
+      <div class="stat"><div class="num">1,379</div><div class="label">signals · this topic</div></div>
+      <div class="stat"><div class="num">13</div><div class="label">weeks observed</div></div>
+      <div class="stat"><div class="num"><span>204</span></div><div class="label">points · loudest signal</div></div>
+      <div class="stat"><div class="num">42,597</div><div class="label">signals · full corpus</div></div>
+    </div>
+  </section>
+
+  <!-- ================= CHART ================= -->
+  <section class="chart-block reveal">
+    <div class="chart-title">Weekly signal volume — the worry hum</div>
+    <p class="chart-sub">Signals captured per week for this topic. No spike, no resolution — unlike the climbing curve in Rewind № 01, this conversation holds a steady volume and churns.</p>
+    <div class="chart" id="chart">
+      <div class="bar-wrap"><span class="tip">6</span><div class="bar" style="height:4%"></div></div>
+      <div class="bar-wrap"><span class="tip">145</span><div class="bar" style="height:100%"></div></div>
+      <div class="bar-wrap"><span class="tip">102</span><div class="bar" style="height:70%"></div></div>
+      <div class="bar-wrap"><span class="tip">118</span><div class="bar" style="height:81%"></div></div>
+      <div class="bar-wrap"><span class="tip">130</span><div class="bar" style="height:90%"></div></div>
+      <div class="bar-wrap"><span class="tip">114</span><div class="bar" style="height:79%"></div></div>
+      <div class="bar-wrap"><span class="tip">103</span><div class="bar" style="height:71%"></div></div>
+      <div class="bar-wrap"><span class="tip">101</span><div class="bar" style="height:70%"></div></div>
+      <div class="bar-wrap"><span class="tip">94</span><div class="bar" style="height:65%"></div></div>
+      <div class="bar-wrap"><span class="tip">128</span><div class="bar" style="height:88%"></div></div>
+      <div class="bar-wrap"><span class="tip">100</span><div class="bar" style="height:69%"></div></div>
+      <div class="bar-wrap"><span class="tip">139</span><div class="bar" style="height:96%"></div></div>
+      <div class="bar-wrap"><span class="tip">99</span><div class="bar" style="height:68%"></div></div>
+    </div>
+    <div class="chart-axis">
+      <span>Mar 16</span><span>Mar 23</span><span>Mar 30</span><span>Apr 6</span><span>Apr 13</span><span>Apr 20</span><span>Apr 27</span><span>May 4</span><span>May 11</span><span>May 18</span><span>May 25</span><span>Jun 1</span><span>Jun 8</span>
+    </div>
+    <p class="chart-note"><b>Honest footnote:</b> collection began mid-March (the first bar is a partial week) and the Jun 8 week was still open at capture. The flatness is the finding: worry about AI and work doesn't trend like a product launch — it hums.</p>
+  </section>
+
+  <!-- ================= CHAPTERS ================= -->
+  <section class="chapters">
+    <div class="spine"></div>
+
+    <article class="chapter reveal">
+      <span class="chapter-num">01</span>
+      <div class="chapter-node"></div>
+      <div class="chapter-month">March <span class="range">wks 1–2</span></div>
+      <h2>The worry arrives <em>fully scripted.</em></h2>
+      <p class="body">
+        When collection started, the conversation already had its whole script. Universal basic
+        income as the answer — a review of <strong>122 experiments</strong> made the rounds.
+        AI-proofing as a personal duty, per the WSJ. New York launched a commission to study the
+        workforce impact. And AI executives supplied the menace: per Newsweek's headline, only
+        <em>two types of people</em> would survive the job market. Everyone was bracing.
+        Nobody had the data yet.
+      </p>
+      <div class="receipts">
+        <div class="receipt"><div class="meta"><span>2026-03-21</span><span class="tag hn">HN</span></div><div class="title">What 122 Universal Basic Income Experiments Show</div><div class="traction"><b>5</b> points</div></div>
+        <div class="receipt"><div class="meta"><span>2026-03-22</span><span class="tag rss">RSS</span></div><div class="title">What Young Workers Are Doing to AI-Proof Themselves — WSJ</div></div>
+        <div class="receipt"><div class="meta"><span>2026-03-24</span><span class="tag rss">RSS</span></div><div class="title">Hochul launches FutureWorks Commission to address AI's impact on workforce</div></div>
+        <div class="receipt"><div class="meta"><span>2026-03-28</span><span class="tag rss">RSS</span></div><div class="title">"AI CEO Says Only 2 Types of People Will Survive in Job Market" — Newsweek</div></div>
+        <div class="receipt"><div class="meta"><span>2026-03-29</span><span class="tag rss">RSS</span></div><div class="title">Youth Employment Rate Drops to 5-Year Low — Chosun Ilbo</div></div>
+      </div>
+    </article>
+
+    <article class="chapter reveal">
+      <span class="chapter-num">02</span>
+      <div class="chapter-node"></div>
+      <div class="chapter-month">April <span class="range">wks 3–6</span></div>
+      <h2>The numbers land — <em>and the labs propose taxing themselves.</em></h2>
+      <p class="body">
+        One April week carried the quarter's heaviest freight. A Goldman Sachs report dominated
+        the headlines — <strong>16,000 U.S. jobs a month</strong>, a "scarring effect," yearslong
+        pay cuts for the displaced (those are the headlines' claims; the corpus stores what they
+        assert). The same week, OpenAI floated <strong>robot taxes, a public wealth fund, and a
+        four-day workweek</strong>. And one quiet headline undercut both: the dataset that could
+        actually predict AI job displacement <em>barely exists</em>. The loudest claims and the
+        thinnest data shared a single news cycle.
+      </p>
+      <div class="receipts">
+        <div class="receipt"><div class="meta"><span>2026-04-06</span><span class="tag rss">RSS</span></div><div class="title">"AI is cutting 16,000 U.S. jobs a month — and Gen Z is taking the brunt, Goldman Sachs says" — Fortune</div></div>
+        <div class="receipt"><div class="meta"><span>2026-04-06</span><span class="tag rss">RSS</span></div><div class="title">Goldman: AI disruption will have a "scarring effect" — yearslong pay cuts for displaced workers</div></div>
+        <div class="receipt"><div class="meta"><span>2026-04-06</span><span class="tag rss">RSS</span></div><div class="title">OpenAI's vision for the AI economy: public wealth funds, robot taxes, a four-day workweek — TechCrunch</div></div>
+        <div class="receipt"><div class="meta"><span>2026-04-06</span><span class="tag rss">RSS</span></div><div class="title">The one dataset that could predict AI job displacement barely exists — and nobody is collecting it</div></div>
+        <div class="receipt"><div class="meta"><span>2026-04-20</span><span class="tag rss">RSS</span></div><div class="title">Elon Musk calls for government cash to counter AI job losses — The Detroit News</div></div>
+        <div class="receipt"><div class="meta"><span>2026-04-20</span><span class="tag rss">RSS</span></div><div class="title">Renaissance Philanthropy launches forecasting hub to predict AI's impact on the workforce</div></div>
+      </div>
+    </article>
+
+    <article class="chapter reveal">
+      <span class="chapter-num">03</span>
+      <div class="chapter-node"></div>
+      <div class="chapter-month">May <span class="range">wks 7–10</span></div>
+      <h2>The prophets recant — <em>while the first real protections ship.</em></h2>
+      <p class="body">
+        Then the strangest turn in the corpus: the people who wrote the apocalypse began
+        withdrawing it. Sam Altman <strong>fell out of love with UBI</strong> — the topic's
+        biggest Hacker News moment to that point — and by month's end Time had him saying the
+        jobs apocalypse he once predicted <em>probably won't happen</em>. (The corpus keeps the
+        cynical read too: Fortune noted both Altman and Amodei walking back their prophecies
+        "as they eye blockbuster IPOs.") Meanwhile, protection stopped being theoretical:
+        <strong>Chinese courts ruled AI-driven layoffs illegal</strong>, and Newsom signed a
+        first-of-its-kind executive order for displaced workers.
+      </p>
+      <div class="receipts">
+        <div class="receipt"><div class="meta"><span>2026-05-01</span><span class="tag hn">HN</span></div><div class="title">Sam Altman falls out of love with universal basic income</div><div class="traction"><b>23</b> points</div></div>
+        <div class="receipt"><div class="meta"><span>2026-05-03</span><span class="tag rss">RSS</span></div><div class="title">Opinion | Why the A.I. Job Apocalypse (Probably) Won't Happen — The New York Times</div></div>
+        <div class="receipt"><div class="meta"><span>2026-05-05</span><span class="tag rss">RSS</span></div><div class="title">Chinese courts rule AI-driven layoffs and pay cuts illegal — China Daily</div></div>
+        <div class="receipt"><div class="meta"><span>2026-05-06</span><span class="tag rss">RSS</span></div><div class="title">"AI can make work more meaningful" — Fast Company</div></div>
+        <div class="receipt"><div class="meta"><span>2026-05-21</span><span class="tag rss">RSS</span></div><div class="title">Governor Newsom signs first-of-its-kind executive order to prepare workers for AI disruption — CA.gov</div></div>
+        <div class="receipt"><div class="meta"><span>2026-05-26</span><span class="tag rss">RSS</span></div><div class="title">"Altman and Amodei are both walking back their AI jobs apocalypse prophecies as they eye blockbuster IPOs" — Fortune</div></div>
+      </div>
+    </article>
+
+    <article class="chapter reveal">
+      <span class="chapter-num">04</span>
+      <div class="chapter-node"></div>
+      <div class="chapter-month">June <span class="range">wks 11–13</span></div>
+      <h2>The argument changes subject: <em>from jobs to what makes us human.</em></h2>
+      <p class="body">
+        With the apocalypse postponed, the fight moved to meaning. The Times argued
+        <strong>writing is fundamental to how we think</strong> — a case against outsourcing
+        cognition itself. Martin Scorsese called AI "creatively freeing" and was rebuked by
+        working artists and their union within the week. And the single loudest signal in this
+        topic's thirteen weeks — <strong>204 points</strong> — wasn't a layoff number. It was
+        Rich Sutton, a Turing Award winner, on <em>AI creativity and discovery</em>. The
+        displacement story commanded the headlines; the meaning story commanded the attention.
+      </p>
+      <div class="receipts">
+        <div class="receipt"><div class="meta"><span>2026-05-27</span><span class="tag rss">RSS</span></div><div class="title">Opinion | Writing Is Fundamental to How We Think — The New York Times</div></div>
+        <div class="receipt"><div class="meta"><span>2026-06-03</span><span class="tag rss">RSS</span></div><div class="title">Martin Scorsese gets backlash after endorsing "creatively freeing" AI — BBC</div></div>
+        <div class="receipt"><div class="meta"><span>2026-06-10</span><span class="tag rss">RSS</span></div><div class="title">Art Director Union's rebuke to Scorsese on AI highlights divisions in creative industries — Forbes</div></div>
+        <div class="receipt"><div class="meta"><span>2026-06-10</span><span class="tag hn">HN</span></div><div class="title">Rich Sutton on AI creativity and discovery</div><div class="traction"><b>204</b> points — the topic's loudest signal in 13 weeks</div></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ================= THE THREAD ================= -->
+  <section class="thread reveal">
+    <div class="rule"></div>
+    <div class="label">The Thread</div>
+    <blockquote>
+      In one quarter, the prophets recanted, the protections shipped — and the loudest signal was about
+      <span class="arc">creativity, not job counts.</span>
+    </blockquote>
+    <p class="kicker">The keywords were tuned for anxiety. What they caught was <b>a renegotiation</b>.</p>
+  </section>
+
+  <!-- ================= CODA ================= -->
+  <section class="coda reveal">
+    <div class="label">Why this matters — if you run a business</div>
+    <h3>"Will AI take the jobs?" was March's question. June asked a better one: what is the work for?</h3>
+    <p>
+      The quarter's honest ledger: the scariest numbers arrived alongside an admission that the
+      predictive data barely exists; the loudest prophet withdrew his own prophecy; courts and a
+      governor built the first guardrails for workers. What held attention by June wasn't
+      displacement — it was <b>agency</b>: what people decide, judge, and make. That's the
+      practical read for a small business. The question isn't whether AI replaces your team;
+      it's whether you redesign their work around the things this whole quarter argued humans
+      keep. <b>Grounded hope, with receipts.</b>
+    </p>
+  </section>
+
+  <!-- ================= COLOPHON ================= -->
+  <footer class="colophon reveal">
+    <div class="label">Provenance<br>&amp; honesty</div>
+    <div>
+      <p>
+        Built from 1,379 signals in the Bridge Ninja intelligence corpus (topic: ai-human-flourishing),
+        collected twice weekly from RSS, Hacker News, GitHub, Hugging Face, and arXiv between
+        2026-03-20 and 2026-06-11. Every dated item above is a real captured signal.
+      </p>
+      <p>
+        Caveats, stated plainly: this topic's keywords (basic income, job displacement, labor impact,
+        creativity) skew toward anxiety framings — they measure the worry conversation, not flourishing
+        itself. The corpus is titles-only, so "Goldman says" means a headline says Goldman says; nothing
+        here verifies the underlying reports. Keyword noise is real — this topic's top-starred GitHub
+        item (752 stars) was an unrelated repo that did not make this story. HN points are at capture.
+        Synthesis: Claude · Bridge Ninja Pulse. Spot-check anything load-bearing before you build on it.
+      </p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add("in"); observer.unobserve(e.target); }
+    }
+  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+
+  document.querySelectorAll(".reveal, .chart").forEach((el) => observer.observe(el));
+
+  // hero elements reveal immediately on load
+  window.addEventListener("load", () => {
+    document.querySelectorAll(".hero .reveal").forEach((el) => el.classList.add("in"));
+  });
+</script>
+
+</body>
+</html>
