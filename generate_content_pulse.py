@@ -143,6 +143,9 @@ def build_prompt(articles_text, config):
 
 WHO WE ARE: {report['identity']}
 
+THE UNDERCURRENT (our differentiator — every angle carries this, stated or
+not): {report['philosophy']}
+
 WHO WE SERVE (the ICP): {report['audience']}
 
 OUR VOICE: {report['voice']}
@@ -170,6 +173,10 @@ DOCTRINE (non-negotiable — the publishing engine rejects violations):
    Wissner-Gross, Blundin) is SEASONING, not the message. Any angle sparked
    there MUST be translated by bridge_ninja_twist into SMB-scale, tactical,
    HUMAN relief. If it can't be, drop it. Never lead with paradigm-shift talk.
+   BUT — the undercurrent above is not seasoning; it's the spine. The best
+   angles make an owner feel both SEEN in their pain and HOPEFUL about what's
+   possible without giving up their humanity. Pain opens the door; grounded
+   hope is what they leave with.
 4. Each angle declares ONE primary klt_job (Know | Like | Trust). "Hits all
    three" is the contamination tell — pick one.
 5. Pain-led mix: roughly {ratio}% of angles should be provenance="ICP-voice".
@@ -204,6 +211,8 @@ OUTPUT — return ONLY a JSON object, no prose, no markdown fences:
 }}
 
 Produce between {settings['min_angles']} and {settings['max_angles']} angles.
+Order them STRONGEST FIRST — the first angle is the one most worth a Monday-
+morning POV post (rawest pain + clearest grounded-hope payoff).
 Quality over quantity — if the week is thin, return fewer. Be specific, name
 things, write in our voice. No invented facts beyond the articles above."""
 
