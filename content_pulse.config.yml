@@ -1,0 +1,99 @@
+# ============================================================
+# CONTENT PULSE — Phase 1 of "Re-aim the Pulse"
+# Web scrape -> doctrine-tagged angles -> content.ideas (status='extracted')
+# -> /find-ideas -> publishing engine.
+#
+# Separate from config.yml (the OpenClaw/intelligence track) on purpose.
+# Tracks stay separate.
+# ============================================================
+
+report:
+  title: "Bridge Ninja Content Pulse"
+  slug: "content-pulse"
+
+  # Who we serve (the ICP, per Robby 2026-06-02: evolved from agencies -> SMBs).
+  audience: >-
+    owners and operators of small-and-medium-sized businesses (SMBs) who feel
+    buried in operational noise, drowning in tools that don't talk to each
+    other, and short on hours for the work that matters
+
+  # Who we are / what we hold (knowledge-base/brand: POSITIONING, MANIFESTO).
+  identity: >-
+    Bridge Ninja builds the "finishing layer" on top of the platforms — AI
+    team members deployed in Slack that clear the noise so people can do work
+    that matters. Pro-work, anti-job. Workplace flourishing over raw
+    productivity. We keep the humanness of the work. We eat our own cooking.
+
+  # Voice (knowledge-base/brand/VOICE-AND-TONE-GUIDE.md).
+  voice: >-
+    "Smart friend who's done it" — honest over polished, specific over generic
+    (numbers, named tools), vulnerable over perfect, clear over clever. Eighth-
+    to ninth-grade reading level. Contractions. Physical metaphors, not literary.
+
+# ------------------------------------------------------------
+# Source set — two families. Each feed carries a provenance hint the
+# synthesizer must honor (the doctrine guardrail). Pain-led; Moonshots is
+# seasoning, not the message.
+# ------------------------------------------------------------
+feeds:
+  # --- ICP-voice: SMB-owner pain in their own words (the lead) ---
+  - name: "r/smallbusiness"
+    url: "https://www.reddit.com/r/smallbusiness/top/.rss?t=week"
+    provenance: "ICP-voice"
+  - name: "r/Entrepreneur"
+    url: "https://www.reddit.com/r/Entrepreneur/top/.rss?t=week"
+    provenance: "ICP-voice"
+  - name: "Google News — SMB owner pain"
+    url: "https://news.google.com/rss/search?q=%22small+business+owner%22+(overwhelmed+OR+%22too+many+tools%22+OR+%22burnt+out%22+OR+%22can%27t+keep+up%22)+AI&hl=en-US&gl=US&ceid=US:en"
+    provenance: "ICP-voice"
+
+  # --- proof: stats / theses that BACK a POV Bridge Ninja already holds ---
+  # Moonshots cluster = seasoning. Every angle sparked here must land at
+  # SMB-scale, tactical, human relief via bridge_ninja_twist, or it's cut.
+  - name: "Moonshots Podcast (Diamandis)"
+    url: "https://feeds.megaphone.fm/DVVTS2890392624"
+    provenance: "proof"
+  - name: "Google News — Abundance thinkers"
+    url: "https://news.google.com/rss/search?q=%22Salim+Ismail%22+OR+%22Alex+Wissner-Gross%22+OR+%22Dave+Blundin%22+OR+%22Peter+Diamandis%22&hl=en-US&gl=US&ceid=US:en"
+    provenance: "proof"
+  - name: "Google News — AI adoption (McKinsey/Gartner)"
+    url: "https://news.google.com/rss/search?q=(site:mckinsey.com+OR+site:gartner.com)+%22AI+adoption%22+small+business&hl=en-US&gl=US&ceid=US:en"
+    provenance: "proof"
+
+settings:
+  lookback_days: 7
+  max_articles_per_feed: 12
+  model: "claude-sonnet-4-6"   # doctrine judgment needs more than Haiku
+  max_tokens: 8000
+  min_angles: 3
+  max_angles: 6
+  # ~2/3 of angles should be ICP-voice (pain-led); proof is seasoning.
+  icp_voice_target_ratio: 0.66
+
+# ------------------------------------------------------------
+# Canonical content.ideas vocabulary — observed in the 75 proven rows
+# (signal/fireflies/manual). The synthesizer picks from these, doesn't invent.
+# ------------------------------------------------------------
+taxonomy:
+  buckets:        # pick 1-2 per angle (free tags, anchored on this recurring set)
+    - "Philosophy & What-Ifs"
+    - "Business Building Reality"
+    - "Behind the Breakthrough"
+    - "AI & Human Psychology"
+    - "Systems Philosophy"
+    - "Best in Class"
+    - "Problems"
+    - "Pricing/Costs"
+    - "Versus/Comparisons"
+    - "Reviews/Assessments"
+  big_5_angle:    # pick exactly 1
+    - "Best/Top recommendations"
+    - "Problems/Pain points"
+    - "Philosophy/Counter-intuitive insights"
+    - "Comparisons (vs, alternatives)"
+    - "Reviews/Assessments"
+  klt_job:        # pick exactly 1 (the doctrine: one primary job, never "all three")
+    - "Know"
+    - "Like"
+    - "Trust"
+  confidence: ["high", "medium", "low"]

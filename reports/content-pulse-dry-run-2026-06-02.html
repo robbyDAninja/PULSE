@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Pulse — Dry Run Results</title>
+<style>
+  :root{--ink:#2C3E50;--teal:#16A085;--bg:#f7f9fa;--card:#fff;--line:#e3e8ea;--muted:#6b7c87;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+       color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 28px 80px;}
+  header.top{border-bottom:3px solid var(--teal);padding-bottom:20px;margin-bottom:8px;}
+  .kicker{color:var(--teal);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+  h1{font-size:30px;margin:6px 0 4px;}
+  .sub{color:var(--muted);font-size:14px;}
+  h2{font-size:20px;margin:42px 0 12px;padding-top:18px;border-top:1px solid var(--line);}
+  h2:first-of-type{border-top:none;}
+  p{margin:10px 0;}
+  .lead{font-size:16px;}
+  .verdict{background:linear-gradient(135deg,#16A085,#13856f);color:#fff;border-radius:14px;
+           padding:22px 26px;margin:24px 0 6px;box-shadow:0 6px 20px rgba(22,160,133,.25);}
+  .verdict h2{border:none;color:#fff;margin:0 0 6px;padding:0;}
+  .verdict p{margin:6px 0;opacity:.96;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+  .box h4{margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
+  .box.before h4{color:#b04a3a;} .box.after h4{color:var(--teal);}
+  .box ul{margin:6px 0 0;padding-left:18px;} .box li{margin:4px 0;font-size:14px;}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;
+        text-transform:uppercase;letter-spacing:.04em;}
+  .icp{background:#e8f6f2;color:#0f6f5c;} .proof{background:#eef1f4;color:#41576a;}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em;}
+  .angle{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--teal);
+         border-radius:10px;padding:18px 20px;margin:14px 0;}
+  .angle.pr{border-left-color:#41576a;}
+  .angle .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;font-size:12px;color:var(--muted);}
+  .angle h3{margin:4px 0 8px;font-size:18px;line-height:1.3;}
+  .angle .hook{font-size:14px;color:#2c3e50;margin:6px 0;}
+  .quote{border-left:3px solid var(--line);padding:6px 0 6px 14px;margin:12px 0;
+         font-style:italic;color:#54636e;font-size:14px;}
+  .twist{background:#f0f8f6;border-radius:8px;padding:10px 14px;font-size:14px;margin-top:10px;}
+  .twist b{color:var(--teal);}
+  .tag{font-size:11px;background:#f0f3f5;border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:#54636e;}
+  .note{background:#fff8ec;border:1px solid #f0e0bf;border-radius:10px;padding:14px 18px;font-size:14px;margin:16px 0;}
+  .muted{color:var(--muted);font-size:13px;}
+  footer{margin-top:50px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:16px;}
+  code{background:#eef1f3;padding:1px 6px;border-radius:5px;font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="kicker">Re-aim the Pulse · Phase 1 · Dry Run</div>
+  <h1>Content Pulse — what it produced</h1>
+  <div class="sub">2026-06-02 · 6 source feeds · 28 articles in window · 6 angles drafted · <b>nothing written to the database yet</b></div>
+</header>
+
+<p class="lead">You asked: <i>is this what I'd need to make a decision — is it solving the problem?</i>
+Here's the honest run-through. The angles below are <b>real</b> — Claude drafted them from this
+week's actual feeds. The owner quotes are <b>real</b>, pulled live from Reddit this week. What
+hasn't happened yet: writing them into the backlog (that's your call, below).</p>
+
+<div class="verdict">
+  <h2>Short answer: yes — and it's a sharp turn from where the Pulse was aimed.</h2>
+  <p>Six weeks ago this machine wrote you a briefing on OpenClaw security patches. Today it
+  handed back six publish-ready content angles, every one rooted in a small-business owner's
+  actual words and bent toward the relief Bridge Ninja sells. Five of six are pain-voiced, one
+  is proof — exactly the pain-led mix you chose.</p>
+</div>
+
+<h2>1 · The problem, and what we re-aimed</h2>
+<div class="grid2">
+  <div class="box before">
+    <h4>Before — mis-aimed</h4>
+    <ul>
+      <li>Reader = "a builder tracking OpenClaw"</li>
+      <li>Feeds: GitHub releases, HN, security RSS</li>
+      <li>~80% near-zero tie to the business</li>
+      <li>Output: a markdown briefing nobody acted on</li>
+    </ul>
+  </div>
+  <div class="box after">
+    <h4>After — content track</h4>
+    <ul>
+      <li>Reader = <b>SMB owners</b> (the ICP)</li>
+      <li>Feeds: owner-pain communities + a light "abundance thinker" layer</li>
+      <li>Every angle is on-business by construction</li>
+      <li>Output: angles in <code>content.ideas</code> → <code>/find-ideas</code> → publishing</li>
+    </ul>
+  </div>
+</div>
+<p class="muted">The strategy/intelligence track (the OpenClaw machine, 36k+ signals) is untouched and still running. This is the new, separate content track only.</p>
+
+<h2>2 · Who we're serving (the ICP)</h2>
+<p>Per your correction, the target evolved from <i>marketing agencies</i> to <b>small-and-medium
+business owners</b> generally. The picture we aimed at:</p>
+<table>
+  <tr><th>Dimension</th><th>What we're targeting</th></tr>
+  <tr><td>Who</td><td>Owner-operators of SMBs — often the only full-time person, or a founder with a small team.</td></tr>
+  <tr><td>The pain</td><td>Buried in operational noise. Tools that don't talk. Revenue that isn't take-home. Growth that breaks what was working.</td></tr>
+  <tr><td>What we promise</td><td>Clear the noise so they can do work that matters. Tactical, practical, human — keep the humanness of the work.</td></tr>
+  <tr><td>Our POV (the "proof" anchor)</td><td>AI takes the bullshit, not the jobs · harness-builder, not hero · abundance at human scale.</td></tr>
+</table>
+<div class="note"><b>One flag I won't hide:</b> the formal ICP doc in your knowledge base
+(<code>IDEAL-CLIENT-PROFILE.md</code>, Apr 11) still says "seven-figure agencies." Your operations
+docs and your instruction today say SMBs. The doc is behind your current intent — worth a quick
+update, separately. I aimed the Pulse at <b>SMBs</b>, per you.</div>
+
+<h2>3 · What it's listening to</h2>
+<p>Two families, pain-led. Moonshots/Diamandis is deliberately <b>seasoning</b>, not the message —
+your call.</p>
+<table>
+  <tr><th>Source</th><th>Role</th></tr>
+  <tr><td>r/smallbusiness · r/Entrepreneur</td><td><span class="pill icp">ICP-voice</span> owner pain, in their words</td></tr>
+  <tr><td>Google News — SMB owner pain</td><td><span class="pill icp">ICP-voice</span> overwhelmed / too many tools / can't keep up</td></tr>
+  <tr><td>Moonshots Podcast (Diamandis)</td><td><span class="pill proof">proof</span> theses that back a POV we already hold</td></tr>
+  <tr><td>Abundance thinkers (Salim, Wissner-Gross, Blundin, Diamandis)</td><td><span class="pill proof">proof</span> seasoning</td></tr>
+  <tr><td>AI adoption (McKinsey / Gartner)</td><td><span class="pill proof">proof</span> stats</td></tr>
+</table>
+
+<h2>4 · This week's results — the 6 angles</h2>
+<p class="muted">Each is one row that would land in <code>content.ideas</code> (status <code>extracted</code>). Quotes are real owner posts from this week.</p>
+
+<div class="angle">
+  <div class="meta"><span class="pill icp">ICP-voice</span> · KLT: <b>Like</b> · <span class="tag">Business Building Reality</span><span class="tag">Problems</span><span class="tag">Pricing/Costs</span> · confidence: high</div>
+  <h3>Revenue Is a Vanity Number. Here's the One That Actually Tells You If You're Okay.</h3>
+  <div class="hook">Plenty of SMB owners are "doing 15k a month" and taking home $1,800. That's not a business — that's a very stressful hobby.</div>
+  <div class="quote">"Last month I did about 4k in revenue. After expenses, software, contractors, taxes set aside, I took home like 1800. That's it. That's the business lol"</div>
+  <div class="twist"><b>BN twist:</b> A big chunk of the noise we clear is the cognitive overhead of tracking where money actually goes. When an AI team member handles the reconciliation loop, the owner finally sees the real number. Not a productivity win — clarity that changes decisions.</div>
+</div>
+
+<div class="angle">
+  <div class="meta"><span class="pill icp">ICP-voice</span> · KLT: <b>Like</b> · <span class="tag">Philosophy &amp; What-Ifs</span><span class="tag">Business Building Reality</span> · confidence: high</div>
+  <h3>The Advice That Hurt My Business More Than Any Mistake I Made</h3>
+  <div class="hook">Say yes to everything. Scale fast. Keep adding features. These aren't bad ideas — they're landmines disguised as wisdom.</div>
+  <div class="quote">"A lot of things work fine when the business is small. Then growth starts exposing weak spots you barely noticed before."</div>
+  <div class="twist"><b>BN twist:</b> Much of what buries owners is the residue of advice that didn't fit their business. We don't add surface area — we compress what's there so operators can tell signal from noise.</div>
+</div>
+
+<div class="angle">
+  <div class="meta"><span class="pill icp">ICP-voice</span> · KLT: <b>Trust</b> · <span class="tag">Business Building Reality</span><span class="tag">Systems Philosophy</span> · confidence: high</div>
+  <h3>Scaling Breaks the Things That Actually Made You Good</h3>
+  <div class="hook">When it's just you, communication lives in your head. At 10 people, that same process leaks everywhere. Scaling destroys strong spots you didn't know to protect.</div>
+  <div class="quote">"Communication. Customer support. Approvals. Hiring. Processes living in one person's head. Then growth starts exposing weak spots you barely noticed before."</div>
+  <div class="twist"><b>BN twist:</b> Built exactly for that gap. The AI team member handles repeated asks, status checks, approvals — so the founder's judgment and the team's knowledge stay available for what needs a human. You're protecting the good stuff.</div>
+</div>
+
+<div class="angle">
+  <div class="meta"><span class="pill icp">ICP-voice</span> · KLT: <b>Know</b> · <span class="tag">AI &amp; Human Psychology</span><span class="tag">Business Building Reality</span> · confidence: high</div>
+  <h3>I Wanted to Feel "Omniscient" in My Business. Claude Got Me Closer Than Any Dashboard.</h3>
+  <div class="hook">Most founders run on five tabs, two apps, and a gut feeling. One owner made an AI piece it all together — and it changed how fast he could decide.</div>
+  <div class="quote">"Having it search info from within apps like Asana and Quo so it can piece info together and make me kind of omniscient... not needing to look up every detail."</div>
+  <div class="twist"><b>BN twist:</b> Exactly what our team members do — they sit in Slack, connect to the tools already in use, surface context on demand. This owner stitched it together by hand. We're building the stitching as the product.</div>
+</div>
+
+<div class="angle">
+  <div class="meta"><span class="pill icp">ICP-voice</span> · KLT: <b>Like</b> · <span class="tag">Business Building Reality</span><span class="tag">Problems</span><span class="tag">Pricing/Costs</span> · confidence: high</div>
+  <h3>Rent Is $7k. Revenue Is $5k. Winter Is Six Months Long. What Now?</h3>
+  <div class="hook">Fixed costs don't care about your slow season. A gelato shop owner posted the clearest picture of SMB cash-flow stress you'll read this week.</div>
+  <div class="quote">"Revenue can drop to around $5-6k/month while rent, CAM, and other fixed costs are over $7k/month. I'm basically the only full-time person running the place."</div>
+  <div class="twist"><b>BN twist:</b> This owner doesn't need more tools. They need to stop doing what a machine could handle — follow-ups, booking, scheduling — so every human hour goes to the real problem: revenue that doesn't vanish in December.</div>
+</div>
+
+<div class="angle pr">
+  <div class="meta"><span class="pill proof">proof</span> · KLT: <b>Trust</b> · <span class="tag">AI &amp; Human Psychology</span><span class="tag">Philosophy &amp; What-Ifs</span> · confidence: medium</div>
+  <h3>Is There Real Demand for AI Agents — or Is It Just YouTube Hype?</h3>
+  <div class="hook">A senior data engineer asked the honest question out loud: real SMB demand, or all demo-stage noise? The answer matters if you're deciding whether to trust any of this.</div>
+  <div class="quote">"...offering AI services to companies that already tried to ship AI features and got stuck somewhere between cool demo and usable product."</div>
+  <div class="twist"><b>BN twist:</b> Why we live in Slack, not a dashboard, and do defined repeatable tasks instead of open-ended agentic flights. Owners don't need a co-pilot that might hallucinate — they need a teammate who handles the intake form every time. The demand is real; the delivery has to match it.</div>
+</div>
+
+<h2>5 · Does it solve the problem?</h2>
+<p>The original problem was a reliable machine pointed at the wrong reader. On this run:</p>
+<table>
+  <tr><th>Test</th><th>Result</th></tr>
+  <tr><td>On-ICP?</td><td>✅ All 6 angles are about SMB-owner reality. Zero OpenClaw drift.</td></tr>
+  <tr><td>Doctrine held? (ICP-voice OR proof, never trend-chasing)</td><td>✅ 5 ICP-voice with real pain quotes, 1 proof backing an existing POV.</td></tr>
+  <tr><td>Pain-led mix (your call)?</td><td>✅ 5:1 pain-to-proof.</td></tr>
+  <tr><td>Moonshots as seasoning, not the message?</td><td>✅ It informed the proof anchor without any "here's a trend" angles.</td></tr>
+  <tr><td>Voice — "smart friend who's done it"?</td><td>✅ Specific, plain, human. Reads like us, not a guru.</td></tr>
+</table>
+<div class="note"><b>Honest caveats:</b> (1) These are <i>draft</i> angles — they still go through your
+<code>/find-ideas</code> review and a human draft/approve before anything publishes; the Pulse fills
+the backlog, it doesn't publish. (2) This is one week's sample; quality will vary with the week.
+(3) Minor: the model occasionally tagged two buckets as one string — already fixed in the script.</div>
+
+<h2>6 · The decision in front of you</h2>
+<p>This <b>is</b> enough to decide on. The question isn't "does the pipeline work" — it does. It's
+whether these angles are the <i>kind of raw material</i> you want filling the content backlog every week.
+If yes, the next moves (each waits for your nod):</p>
+<table>
+  <tr><th>Step</th><th>What it touches</th></tr>
+  <tr><td>Run once with <code>--write</code></td><td>Inserts these into <code>content.ideas</code>; confirm they surface in <code>/find-ideas</code>.</td></tr>
+  <tr><td>Wire to the weekly GitHub Action</td><td>Automation — runs every Monday.</td></tr>
+  <tr><td>Slim the email</td><td>"N new angles this week → review in <code>/find-ideas</code>."</td></tr>
+</table>
+
+<footer>
+  Bridge Ninja · Content Pulse dry run · generated 2026-06-02 · no database writes ·
+  source: <code>generate_content_pulse.py</code> + <code>content_pulse.config.yml</code>
+</footer>
+
+</div>
+</body>
+</html>

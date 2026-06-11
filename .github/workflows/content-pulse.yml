@@ -1,0 +1,62 @@
+name: Content Pulse
+
+on:
+  schedule:
+    # Monday 13:00 UTC (~8-9am ET) — angles in the backlog before the week starts
+    - cron: '0 13 * * 1'
+  workflow_dispatch:
+    inputs:
+      email_only:
+        description: 'Skip generation; just email about an already-written run from today'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: read
+
+jobs:
+  content-pulse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate content angles
+        if: ${{ github.event.inputs.email_only != 'true' }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python generate_content_pulse.py --write
+
+      - name: Send slim email
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          PULSE_WEBHOOK_SECRET: ${{ secrets.PULSE_WEBHOOK_SECRET }}
+        run: python send_content_pulse_email.py
+
+      - name: Alert Slack on failure
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -n "${SLACK_BOT_TOKEN}" ]; then
+            curl -s -X POST "https://slack.com/api/chat.postMessage" \
+              -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"channel\": \"C0A6NNXEEJG\",
+                \"text\": \":warning: Content Pulse failed. Check: ${RUN_URL}\"
+              }"
+          fi
