@@ -85,6 +85,17 @@ sources:
   rss:
     enabled: true
     feeds:
+      # Primary sources — big-lab announcements pre-survived a mature noise filter
+      - name: "OpenAI News"
+        url: "https://openai.com/news/rss.xml"
+      - name: "Google DeepMind Blog"
+        url: "https://deepmind.google/blog/rss.xml"
+      - name: "Google AI Blog"
+        url: "https://blog.google/technology/ai/rss/"
+      - name: "NVIDIA Blog"
+        url: "https://blogs.nvidia.com/feed/"
+      - name: "Hugging Face Blog"
+        url: "https://huggingface.co/blog/feed.xml"
       - name: "Google Alerts — AI Agents"
         url: "https://www.google.com/alerts/feeds/AI+agent+framework"
       - name: "Google Alerts — AI Business"
@@ -111,7 +122,15 @@ sources:
     search_enabled: true
     packages: []  # Additional packages to always track (beyond keyword search)
 
-# --- Scoring weights (v1 — calibrate after 8 weeks of data) ---
+# --- Trajectory briefing (Tue/Fri email; prompt in generate_briefing.py) ---
+briefing:
+  model: "claude-sonnet-4-6"   # editorial judgment needs more than Haiku
+  max_tokens: 2000
+  lookback_hours: 96
+  max_signals: 150
+
+# --- Scoring weights (RETIRED 2026-06-11 — kept for archaeology; nothing consumes
+# --- composite scores or stages anymore. The Tue/Fri sawtooth made deltas noise.) ---
 scoring:
   weights:
     github_star_velocity: 0.20

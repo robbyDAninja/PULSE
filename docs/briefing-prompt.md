@@ -1,8 +1,9 @@
 # Trajectory — Tue/Fri Briefing Prompt
 
-**Version:** 0.1
+**Version:** 1.0
 **Last updated:** 2026-06-11
-**Status:** DRAFT — pending Robby's review. Replaces the Tue/Fri signal brief (`generate_signal_brief.py`) once approved.
+**Status:** LIVE — approved by Robby 2026-06-11. Wired into `collect-signals.yml` (Tue/Fri); the executable
+copy of the prompt lives in `generate_briefing.py`. Edit both together.
 
 This is the synthesis prompt for the briefing that replaces both old intelligence emails. Input: raw signals
 from the Tue/Fri collection window (`intelligence.signals`). Output: email-ready markdown. No composite
@@ -91,4 +92,5 @@ The whole briefing must read in under two minutes. ~250 words maximum.
 
 | Version | Date | Type | Change |
 |---|---|---|---|
+| 1.0 | 2026-06-11 | Major | Approved and wired in: `generate_briefing.py` live in Tue/Fri workflow; signal brief retired |
 | 0.1 | 2026-06-11 | Minor | Initial draft for review |
