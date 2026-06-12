@@ -172,6 +172,14 @@ def synthesize(signals_text: str, settings: dict) -> str:
     return message.content[0].text.strip()
 
 
+RECIPIENTS = [
+    "admin@bridge.ninja",
+    "darryl@bridge.ninja",
+    "esteban@bridge.ninja",
+    "rae@bridge.ninja",
+]
+
+
 def send_briefing(markdown: str, date_str: str) -> bool:
     supabase_url = os.environ["SUPABASE_URL"]
     webhook_secret = os.environ.get("PULSE_WEBHOOK_SECRET", "")
@@ -183,6 +191,7 @@ def send_briefing(markdown: str, date_str: str) -> bool:
             "subject": f"Trajectory — {date_str}",
             "webhook_secret": webhook_secret,
             "report_markdown": markdown,
+            "recipients": RECIPIENTS,
         },
         timeout=30,
     )
