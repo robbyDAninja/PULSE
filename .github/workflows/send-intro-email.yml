@@ -1,0 +1,46 @@
+name: Send Trajectory intro email (one-off)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install httpx
+        run: pip install httpx
+
+      - name: Send intro email
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          PULSE_WEBHOOK_SECRET: ${{ secrets.PULSE_WEBHOOK_SECRET }}
+        run: |
+          python - <<'PY'
+          import os, pathlib, httpx
+
+          md = pathlib.Path("docs/trajectory-intro-email.md").read_text()
+          resp = httpx.post(
+              f"{os.environ['SUPABASE_URL']}/functions/v1/send-pulse-email",
+              json={
+                  "report_date": "2026-06-12",
+                  "subject": "Introducing Trajectory — a twice-weekly signal briefing",
+                  "webhook_secret": os.environ["PULSE_WEBHOOK_SECRET"],
+                  "report_markdown": md,
+                  "recipients": [
+                      "admin@bridge.ninja",
+                      "darryl@bridge.ninja",
+                      "esteban@bridge.ninja",
+                      "rae@bridge.ninja",
+                  ],
+              },
+              timeout=30,
+          )
+          print(resp.status_code, resp.text)
+          resp.raise_for_status()
+          PY
