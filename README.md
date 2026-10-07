@@ -1,6 +1,6 @@
 # Bridge Ninja Pulse
 
-**Version:** 2.0
+**Version:** 2.1
 **Last updated:** 2026-10-07
 
 Pulse has two separate research tracks. The practical publishing track helps
@@ -96,6 +96,8 @@ Supported intake roles are `local_owner_question`, `internal_observation` and
 `research_hypothesis`. A client request, proposed package, actual production
 observation and measured result are different evidence states. Private research
 input is not authority for a public case study or a new client service.
+Use `observed_on: "YYYY-MM-DD"` instead of `observed_at` when only the day is
+known. Preserve that precision; an observation date is not a publication date.
 
 RSS dates are normalized to UTC and filtered to the seven-day window. Unknown
 dates are reference-only. Page/changelog retrieval never creates a publication
@@ -144,4 +146,5 @@ schedule is running.
 
 | Version | Date | Change |
 |---|---|---|
+| 2.1 | 2026-10-07 | Preserved day-only intake dates and distinguished private observation dates from publication dates. |
 | 2.0 | 2026-10-07 | Documented practical local-business research, separate private stages, evidence rules, bounded synthesis and activation requirements; retained broad/historical tracks. |

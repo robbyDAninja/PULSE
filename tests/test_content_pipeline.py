@@ -179,6 +179,18 @@ class PracticalPulseTests(unittest.TestCase):
             with self.assertRaises(ValueError): p.synthesize(packet,config,1,Path(directory)/'receipt.json',client)
         client.messages.create.assert_not_called()
 
+    def test_day_only_intake_does_not_invent_publication_time(self):
+        row={'record_id':'day-only','title':'Recorded question','excerpt':'Synthetic owner question',
+             'source_locator':'Fictional date-only record','observed_on':'2026-10-07','lane':'owner_needs',
+             'role':'local_owner_question','visibility':'internal','publication_permission':'not_granted'}
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'intake.json';path.write_text(json.dumps({'schema_version':'2.0','items':[row]}))
+            item=p.load_intake(path,self.config['sources'][-1],self.config['settings'],self.at)[0]
+            self.assertIsNone(item['published_at'])
+            self.assertIsNone(item['observed_at'])
+            self.assertEqual(item['date_precision'],'day')
+            self.assertEqual(item['observed_on'],'2026-10-07')
+
     def test_budget_and_stale_rates_block_paid_request(self):
         client=Mock(); client.messages.count_tokens.return_value=SimpleNamespace(input_tokens=100)
         with tempfile.TemporaryDirectory() as directory, patch.object(p,'now',return_value=self.at):

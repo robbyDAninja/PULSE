@@ -139,7 +139,9 @@ def make_item(source, title, excerpt, url, date, as_of, settings, **extra):
          'within_window' if source_date >= as_of - timedelta(days=settings['lookback_days']) else 'older_context'),
         **extra,
     }
-    item['content_sha256'] = digest({k:item[k] for k in ['title','excerpt','url','published_at']})
+    identity = ['title','excerpt','url','published_at']
+    identity += [k for k in ['record_id','source_locator','observed_at','observed_on'] if k in item]
+    item['content_sha256'] = digest({k:item[k] for k in identity})
     item['item_id'] = source['id'] + ':' + item['content_sha256'][:20]
     return item
 
@@ -191,19 +193,29 @@ def load_intake(path, source, settings, as_of):
         raise ValueError('Unknown intake schema')
     items = []
     for row in data.get('items', []):
-        for key in ['record_id','title','excerpt','source_locator','observed_at','lane','role','visibility','publication_permission']:
+        for key in ['record_id','title','excerpt','source_locator','lane','role','visibility','publication_permission']:
             if key not in row:
                 raise ValueError('Intake missing ' + key)
+        if bool(row.get('observed_at')) == bool(row.get('observed_on')):
+            raise ValueError('Supply exactly one observation timestamp or date')
+        if row.get('observed_on'):
+            if not re.fullmatch(r'\d{4}-\d{2}-\d{2}',row['observed_on']):
+                raise ValueError('Observation date must be YYYY-MM-DD')
+            datetime.strptime(row['observed_on'],'%Y-%m-%d')
+        observation_date = row.get('observed_at') or row['observed_on']+'T00:00:00Z'
         if row['visibility'] != 'internal' or row['publication_permission'] != 'not_granted':
             raise ValueError('Intake is internal research only; publication permission is separate')
         if row['role'] not in {'local_owner_question','internal_observation','research_hypothesis'}:
             raise ValueError('Unsupported intake role')
         if row['lane'] not in {'owner_needs','video_avatar','social_workflows','economics','horizon'}:
             raise ValueError('Unknown intake lane')
-        item = make_item(source, row['title'], row['excerpt'], None, row['observed_at'], as_of, settings,
+        item = make_item(source, row['title'], row['excerpt'], None, observation_date, as_of, settings,
                          role=row['role'], lane=row['lane'], visibility='internal',
                          publication_permission='not_granted', source_locator=row['source_locator'],
-                         record_id=row['record_id'])
+                         record_id=row['record_id'],published_at=None,
+                         observed_at=row.get('observed_at'),observed_on=row.get('observed_on'),
+                         date_precision='day' if row.get('observed_on') else 'timestamp',
+                         date_basis='observation_not_publication')
         if item['freshness']=='future_date':
             raise ValueError('An observation cannot occur in the future')
         items.append(item)
