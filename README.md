@@ -1,6 +1,6 @@
 # Bridge Ninja Pulse
 
-**Version:** 2.1
+**Version:** 2.2
 **Last updated:** 2026-10-07
 
 Pulse has two separate research tracks. The practical publishing track helps
@@ -18,7 +18,7 @@ current collection, subscriber delivery or publication.
 | Owner needs | What customer or communication task needs attention? |
 | Video and avatars | What improves usable speech, likeness, consent and delivery? |
 | Social workflows | How can an owner plan, approve, publish and learn consistently? |
-| Content economics | What is the total cost of equivalent accepted work? |
+| Value and sustainable delivery | What improves useful outcomes, quality, owner effort and viable delivery? |
 | Future capabilities | What broader development deserves watching? At most one candidate. |
 
 The initial local area is Florida's Treasure Coast, an explicit working
@@ -30,7 +30,11 @@ Each packet contains zero to five candidates, with an owner problem, useful
 takeaway, demonstration, honest service connection, source references, evidence
 state, unresolved checks and a try/watch/skip recommendation. No filler quota.
 
-"Are you overpaying for social content?" can be a research question. A savings
+Research themes come before post angles. "Are you overpaying for social
+content?" is an optional later headline, with no dedicated research quota or
+presumption that a business pays too much. Investigate quality, usefulness,
+owner effort, trust, approvals, consistency and actual results alongside cost.
+A savings
 assertion needs observed total costs for comparable deliverables, quality,
 revisions, posting responsibility, labor and allocated subscriptions. Tool plan
 prices alone cannot establish service savings. Validation checks packet
@@ -146,5 +150,6 @@ schedule is running.
 
 | Version | Date | Change |
 |---|---|---|
+| 2.2 | 2026-10-07 | Clarified broad value/service research versus optional post angles; reduced cost-comparison priority and retained savings evidence requirements. |
 | 2.1 | 2026-10-07 | Preserved day-only intake dates and distinguished private observation dates from publication dates. |
 | 2.0 | 2026-10-07 | Documented practical local-business research, separate private stages, evidence rules, bounded synthesis and activation requirements; retained broad/historical tracks. |

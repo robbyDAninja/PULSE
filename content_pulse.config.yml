@@ -1,4 +1,4 @@
-version: '2.0'
+version: '2.1'
 updated_at: '2026-10-07'
 report:
   title: Bridge Ninja Practical Pulse
@@ -17,6 +17,13 @@ report:
     Investigate evidence that challenges our assumptions as well as supports
     them. Translate a capability into one owner's useful outcome.
   voice: Plain, specific, human and useful. Avoid hype and unsupported savings.
+  selection_rule: >-
+    Research owner needs, useful outcomes, quality, sustainable delivery and
+    practical service design before choosing a post headline. Overpaying for
+    social content is only an optional later editorial angle, not a standing
+    research topic, premise, source-selection bias or candidate quota. Consider
+    owner effort, message quality, consistency, approvals, trust and results
+    alongside cost. Let the evidence determine which angles are worth using.
 
 geography:
   initial_area: Treasure Coast, Florida
@@ -38,8 +45,9 @@ lanes:
     priority: 1
     question: What helps a business plan, approve, publish and learn consistently?
   economics:
-    priority: 1
-    question: What does comparable accepted content cost, including people and revisions?
+    priority: 2
+    label: Value and sustainable delivery
+    question: What makes content useful and sustainable, considering quality, owner effort, results and total cost?
   horizon:
     priority: 3
     question: What broader capability could become useful to an owner?
