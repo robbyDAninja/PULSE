@@ -5,3 +5,5 @@ __pycache__/
 venv/
 .venv/
 scripts/logs/
+.pulse-private/
+pulse-runs/

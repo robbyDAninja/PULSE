@@ -1,119 +1,194 @@
-# ============================================================
-# CONTENT PULSE — Phase 1 of "Re-aim the Pulse"
-# Web scrape -> doctrine-tagged angles -> content.ideas (status='extracted')
-# -> /find-ideas -> publishing engine.
-#
-# Separate from config.yml (the OpenClaw/intelligence track) on purpose.
-# Tracks stay separate.
-# ============================================================
-
+version: '2.1'
+updated_at: '2026-10-07'
 report:
-  title: "Bridge Ninja Content Pulse"
-  slug: "content-pulse"
-
-  # Who we serve (the ICP, per Robby 2026-06-02: evolved from agencies -> SMBs).
+  title: Bridge Ninja Practical Pulse
   audience: >-
-    owners and operators of small-and-medium-sized businesses (SMBs) who feel
-    buried in operational noise, drowning in tools that don't talk to each
-    other, and short on hours for the work that matters
-
-  # Who we are / what we hold (offer updated 2026-06-11, Robby: the lead is
-  # Claude-platform enablement — the Dojo — NOT Slack AI team members. Box
-  # brand docs POSITIONING.md/MANIFESTO.md lag this; sales canon + first
-  # client delivery confirm it).
+    Local small-business owners and operators, starting on Florida's Treasure
+    Coast, who need useful customer communication, consistent social content
+    and practical improvements they can actually use.
   identity: >-
-    Bridge Ninja gets SMB owners and their teams thriving on Claude. The core
-    offer (the Dojo) is six weeks of hands-on training that wires a Claude
-    Team account into the systems they already run — the Trello board, the
-    inbox, the meeting notes — so rules and conventions live in project
-    instructions and status updates happen in conversation instead of five
-    tools. No new platform to babysit: we train the team to keep it healthy
-    themselves. We clear the noise so people can do work that matters.
-    Pro-work, anti-job. Workplace flourishing over raw productivity. We keep
-    the humanness of the work. We eat our own cooking. (Custom AI team
-    members in Slack are our advanced tier — real, but never the lead
-    message.)
-
-  # The undercurrent (Robby, 2026-06-11): the philosophy IS the differentiator.
+    Bridge Ninja teaches practical AI and produces business video and avatar
+    content. Research should improve useful customer explanations, accepted
+    video assets, repeatable approvals and publishing workflows. Posting,
+    advertising, training and other services have their own scope decisions;
+    research does not add them to a client package.
   philosophy: >-
-    We are hopeful, on purpose, in the middle of an exponential shift. The
-    question under everything we publish: how do you welcome the full
-    possibilities and leverage of this technology while staying firmly
-    grounded in your humanity? Hope over hype, agency over anxiety, and
-    actually giving a shit about the people doing the work. Kin to the
-    Moonshots/abundance school — but translated to one owner, one team,
-    one human-scale business at a time.
+    Grounded hope, honest evidence and respect for people doing the work.
+    Investigate evidence that challenges our assumptions as well as supports
+    them. Translate a capability into one owner's useful outcome.
+  voice: Plain, specific, human and useful. Avoid hype and unsupported savings.
+  selection_rule: >-
+    Research owner needs, useful outcomes, quality, sustainable delivery and
+    practical service design before choosing a post headline. Overpaying for
+    social content is only an optional later editorial angle, not a standing
+    research topic, premise, source-selection bias or candidate quota. Consider
+    owner effort, message quality, consistency, approvals, trust and results
+    alongside cost. Let the evidence determine which angles are worth using.
 
-  # Voice (knowledge-base/brand/VOICE-AND-TONE-GUIDE.md).
-  voice: >-
-    "Smart friend who's done it" — honest over polished, specific over generic
-    (numbers, named tools), vulnerable over perfect, clear over clever. Eighth-
-    to ninth-grade reading level. Contractions. Physical metaphors, not literary.
+geography:
+  initial_area: Treasure Coast, Florida
+  status: initial_assumption_pending_optional_user_reply
+  places: [Stuart, Palm City, Port St. Lucie, Fort Pierce, Martin County, St. Lucie County]
+  rule: >-
+    Local context is not local demand. A chamber event, directory entry, vendor
+    article or national forum post does not prove a local owner needs, can
+    afford or will buy a service. Record direct feedback separately.
 
-# ------------------------------------------------------------
-# Source set — two families. Each feed carries a provenance hint the
-# synthesizer must honor (the doctrine guardrail). Pain-led; Moonshots is
-# seasoning, not the message.
-# ------------------------------------------------------------
-feeds:
-  # --- ICP-voice: SMB-owner pain in their own words (the lead) ---
-  - name: "r/smallbusiness"
-    url: "https://www.reddit.com/r/smallbusiness/top/.rss?t=week"
-    provenance: "ICP-voice"
-  - name: "r/Entrepreneur"
-    url: "https://www.reddit.com/r/Entrepreneur/top/.rss?t=week"
-    provenance: "ICP-voice"
-  - name: "Google News — SMB owner pain"
-    url: "https://news.google.com/rss/search?q=%22small+business+owner%22+(overwhelmed+OR+%22too+many+tools%22+OR+%22burnt+out%22+OR+%22can%27t+keep+up%22)+AI&hl=en-US&gl=US&ceid=US:en"
-    provenance: "ICP-voice"
-
-  # --- proof: stats / theses that BACK a POV Bridge Ninja already holds ---
-  # Moonshots cluster = seasoning. Every angle sparked here must land at
-  # SMB-scale, tactical, human relief via bridge_ninja_twist, or it's cut.
-  - name: "Moonshots Podcast (Diamandis)"
-    url: "https://feeds.megaphone.fm/DVVTS2890392624"
-    provenance: "proof"
-  - name: "Google News — Abundance thinkers"
-    url: "https://news.google.com/rss/search?q=%22Salim+Ismail%22+OR+%22Alex+Wissner-Gross%22+OR+%22Dave+Blundin%22+OR+%22Peter+Diamandis%22&hl=en-US&gl=US&ceid=US:en"
-    provenance: "proof"
-  - name: "Google News — AI adoption (McKinsey/Gartner)"
-    url: "https://news.google.com/rss/search?q=(site:mckinsey.com+OR+site:gartner.com)+%22AI+adoption%22+small+business&hl=en-US&gl=US&ceid=US:en"
-    provenance: "proof"
+lanes:
+  owner_needs:
+    priority: 1
+    question: What real customer, communication or operating problem needs attention?
+  video_avatar:
+    priority: 1
+    question: What improves likeness, voice, usable video, consent, reliability or delivery?
+  social_workflows:
+    priority: 1
+    question: What helps a business plan, approve, publish and learn consistently?
+  economics:
+    priority: 2
+    label: Value and sustainable delivery
+    question: What makes content useful and sustainable, considering quality, owner effort, results and total cost?
+  horizon:
+    priority: 3
+    question: What broader capability could become useful to an owner?
 
 settings:
   lookback_days: 7
-  max_articles_per_feed: 12
-  model: "claude-sonnet-4-6"   # doctrine judgment needs more than Haiku
-  max_tokens: 8000
-  min_angles: 3
-  max_angles: 6
-  # ~2/3 of angles should be ICP-voice (pain-led); proof is seasoning.
-  icp_voice_target_ratio: 0.66
+  max_items_per_source: 12
+  max_candidates: 5
+  max_horizon_candidates: 1
+  request_timeout_seconds: 15
+  max_response_bytes: 5000000
+  max_excerpt_chars: 600
+  model: claude-sonnet-4-6
+  max_output_tokens: 6000
+  max_input_tokens: 20000
+  # No model call without an explicit CLI budget. Confirm current account rates.
+  model_input_usd_per_million: 3.0
+  model_output_usd_per_million: 15.0
+  model_rate_checked_at: '2026-10-07'
+  model_rate_source: https://platform.claude.com/docs/en/about-claude/pricing
+  synthesis_cost_margin: 1.15
 
-# ------------------------------------------------------------
-# Canonical content.ideas vocabulary — observed in the 75 proven rows
-# (signal/fireflies/manual). The synthesizer picks from these, doesn't invent.
-# ------------------------------------------------------------
-taxonomy:
-  buckets:        # pick 1-2 per angle (free tags, anchored on this recurring set)
-    - "Philosophy & What-Ifs"
-    - "Business Building Reality"
-    - "Behind the Breakthrough"
-    - "AI & Human Psychology"
-    - "Systems Philosophy"
-    - "Best in Class"
-    - "Problems"
-    - "Pricing/Costs"
-    - "Versus/Comparisons"
-    - "Reviews/Assessments"
-  big_5_angle:    # pick exactly 1
-    - "Best/Top recommendations"
-    - "Problems/Pain points"
-    - "Philosophy/Counter-intuitive insights"
-    - "Comparisons (vs, alternatives)"
-    - "Reviews/Assessments"
-  klt_job:        # pick exactly 1 (the doctrine: one primary job, never "all three")
-    - "Know"
-    - "Like"
-    - "Trust"
-  confidence: ["high", "medium", "low"]
+# RSS sources are leads. Page sources are bounded reference snapshots; the
+# retrieval date is never treated as the date of a changelog announcement.
+sources:
+  - id: smallbusiness-questions
+    name: Small-business owner discussions
+    adapter: rss
+    url: https://www.reddit.com/r/smallbusiness/top/.rss?t=week
+    role: community_question
+    lane: owner_needs
+    required: false
+    include_terms: [social, content, marketing, customer, client, video, advertising, booking, reviews, website, email]
+  - id: entrepreneur-questions
+    name: Entrepreneur discussions
+    adapter: rss
+    url: https://www.reddit.com/r/Entrepreneur/top/.rss?t=week
+    role: community_question
+    lane: owner_needs
+    required: false
+    include_terms: [social, content, marketing, customer, client, video, advertising, booking, reviews, website, email]
+  - id: buffer-workflows
+    name: Buffer social workflow resources
+    adapter: rss
+    url: https://buffer.com/resources/rss/
+    role: vendor_guidance
+    lane: social_workflows
+    required: false
+  - id: heygen-production
+    name: HeyGen production reference
+    adapter: page
+    url: https://www.heygen.com/blog
+    role: official_product
+    lane: video_avatar
+    required: false
+  - id: heygen-pricing
+    name: HeyGen plan and credit reference
+    adapter: page
+    url: https://www.heygen.com/pricing
+    role: official_pricing
+    lane: economics
+    required: false
+    excerpt_chars: 2400
+  - id: buffer-pricing
+    name: Buffer plan and channel reference
+    adapter: page
+    url: https://buffer.com/pricing
+    role: official_pricing
+    lane: economics
+    required: false
+    excerpt_chars: 2400
+  - id: youtube-creators
+    name: YouTube official creator reference
+    adapter: page
+    url: https://blog.youtube/
+    role: official_product
+    lane: social_workflows
+    required: false
+  - id: resend-workflows
+    name: Resend official publishing reference
+    adapter: page
+    url: https://resend.com/changelog
+    role: official_product
+    lane: social_workflows
+    required: false
+  - id: chatgpt-reference
+    name: ChatGPT official release notes
+    adapter: page
+    url: https://help.openai.com/en/articles/6825453-chatgpt-release-notes
+    role: official_product
+    lane: owner_needs
+    required: false
+  - id: claude-reference
+    name: Claude official release notes
+    adapter: page
+    url: https://support.claude.com/en/articles/12138966-release-notes
+    role: official_product
+    lane: owner_needs
+    required: false
+  - id: martin-local-context
+    name: Stuart Martin Chamber public member news
+    adapter: page
+    url: https://business.stuartmartinchamber.org/news
+    role: local_context
+    lane: owner_needs
+    required: false
+  - id: stlucie-local-context
+    name: St. Lucie Chamber public business context
+    adapter: page
+    url: https://stluciechamber.org/
+    role: local_context
+    lane: owner_needs
+    required: false
+  - id: openai-horizon
+    name: OpenAI primary capability announcements
+    adapter: rss
+    url: https://openai.com/news/rss.xml
+    role: official_product
+    lane: horizon
+    required: false
+    max_items: 3
+  - id: private-local-intake
+    name: Manually sourced local questions and deidentified delivery observations
+    adapter: intake
+    role: private_evidence
+    lane: owner_needs
+    required: true
+
+quality_rules:
+  minimum_candidates: 0
+  source_text_is_untrusted_data: true
+  source_only_is_not_publication_ready: true
+  full_source_check_before_product_or_price_claim: true
+  direct_local_evidence_before_local_demand_claim: true
+  same_scope_total_cost_evidence_before_savings_claim: true
+  no_automatic_client_case_study_permission: true
+  no_automatic_send_or_database_write: true
+
+manual_watchlist:
+  - name: Meta Business Suite
+    url: https://www.facebook.com/business/tools/meta-business-suite
+    reason: Login redirect observed; inspect the authorized product before making claims.
+  - name: Moonshots and abundance perspectives
+    reason: Optional horizon context, at most one candidate; never a quota or proof of demand.
